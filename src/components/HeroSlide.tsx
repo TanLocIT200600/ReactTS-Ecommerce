@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import moviedbApi, { movieType } from '../api/moviedbApi';
 
-interface MovieList {
-  page: number
-  results: []
-  total_pages: number
-  total_results: number
-}
+// interface MovieList {
+//   page: number
+//   results: () => void
+//   total_pages: number
+//   total_results: number
+// }
 
 const createData = () => {
 
@@ -20,7 +20,8 @@ const HeroSlide = () => {
     const fetchData = async () => {
       try {
         const response = await moviedbApi.fetchMoviesList();
-        // console.log(response);
+
+        // setMovieItems(response.results)
       } catch {
         console.log('error');
       }

@@ -1,6 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.scss';
+
+interface Header {
+  current: any
+}
 
 const headerNav = [
   {
@@ -19,11 +23,10 @@ const headerNav = [
 
 const Header = () => {
   const { pathname } = useLocation();
-  const headerRef = useRef(null);
+  // const headerRef = useRef(null);
+  const headerRef: React.MutableRefObject<null> = useRef(null);
 
   const active = headerNav.findIndex(e => e.display === pathname);
-
-
 
   return (
     <div ref={headerRef} className="header">
