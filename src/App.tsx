@@ -1,10 +1,17 @@
 import React from 'react';
+import HeroSlide from './components/HeroSlide';
+import './App.scss'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Header from './components/Header/Header';
 
 function App() {
   return (
-    <div className="App">
-      app
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HeroSlide />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
