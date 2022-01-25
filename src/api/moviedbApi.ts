@@ -28,7 +28,8 @@ export const tvType = {
 const moviedbApi = {
   fetchMoviesList: async () => {
     const res = await axiosClient.get(`${apiConfig.baseUrl}movie/${movieType.popular}?api_key=${apiConfig.apiKey}`)
-      .then((res) => console.log(res)
+      .then((res) =>
+        console.log(res)
       )
       .catch((error) => console.log(error)
       )
