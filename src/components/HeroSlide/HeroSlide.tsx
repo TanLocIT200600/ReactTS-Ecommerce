@@ -1,10 +1,16 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import SwiperCore, { Autoplay } from "swiper";
+import './heroSlide.scss';
+import Slider from "react-slick"
+
 
 interface IMyData {
   page: number;
   id: number,
   title: string,
+  backdrop_path: string,
+  poster_path: string,
   results: [
     adult: boolean,
     backdrop_path: string,
@@ -23,6 +29,9 @@ interface IMyData {
 }
 
 const HeroSlide = () => {
+
+  SwiperCore.use([Autoplay]);
+
   const [movie, setMovie] = useState<IMyData[]>();
 
   useEffect(() => {
@@ -40,15 +49,29 @@ const HeroSlide = () => {
     fetchMovieList()
   }, [])
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true
+  };
+
 
   return (
-    <ul>
-      {movie?.map((item) => (
-        <li key={item.id}>{item.title}</li>
-      ))}
-    </ul>
+    <div className="hero-slide">
+      <Slider {...settings}>
+        {
+          movie?.map((item) => (
+            <img key={item.id} src={`https://image.tmdb.org/t/p/w500/${item.backdrop_path}`} alt='' width="1000" height="800" />
+          ))
+        }
+      </Slider>
+    </div>
   );
 };
+
 
 export default HeroSlide;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import HeroSlide from '../../components/HeroSlide';
+import HeroSlide from '../../components/HeroSlide/HeroSlide';
 
 const Home = () => {
   return <>
