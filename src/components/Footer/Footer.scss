@@ -5,7 +5,12 @@
   background-position: top;
   background-size: cover;
   background-repeat: no-repeat;
-
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0.4),
+      rgba(0, 0, 0, 0.8)
+    ),
+    url("https://s29588.pcdn.co/wp-content/uploads/sites/2/2019/03/Movie_Posters_Orange_Blue_Featured.jpg.optimal.jpg");
   &__content {
     max-width: 1000px;
     &__logo {

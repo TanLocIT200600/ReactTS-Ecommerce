@@ -4,7 +4,7 @@ import "./Footer.scss"
 
 const Footer = () => {
   return (
-    <div className="footer" style={{ backgroundImage: `url('https://s29588.pcdn.co/wp-content/uploads/sites/2/2019/03/Movie_Posters_Orange_Blue_Featured.jpg.optimal.jpg')` }}>
+    <div className="footer">
       <div className="footer__content container">
         <div className="footer__content__logo">
           <img src="https://play-lh.googleusercontent.com/BGCtAtNN1Ck_ke7wU-7EDps4y1EFoufBGSvbdyVYERpGPh2OA2_dF-Ovcx8lFF-pKVI" alt="" />

@@ -1,0 +1,108 @@
+@use "../../scss/" as *;
+.trending-movie {
+  width: 90%;
+  margin: auto;
+  height: 500px;
+  margin-top: 7%;
+
+  @include tablet {
+    height: 500px;
+    margin-top: 5%;
+  }
+  @include mobile {
+    height: 450px;
+    margin-top: 3%;
+    width: 320px;
+  }
+  &__title {
+    color: $white;
+    font-size: 3rem;
+    @include tablet {
+      font-size: 2.2rem;
+    }
+    @include mobile {
+      font-size: 2rem;
+    }
+  }
+  .slick-list {
+    @include mobile {
+      padding: 0 10%;
+    }
+  }
+  .slider-item {
+    position: relative;
+    padding-right: 10px;
+    @include mobile {
+      width: 80%;
+      max-width: 300px;
+    }
+    &__images {
+      & img {
+        width: 270px;
+        height: 300px;
+        @include mobile {
+          width: 250px;
+          height: 300px;
+        }
+      }
+    }
+    &__content {
+      @include desktop {
+        width: 270px;
+        height: 100px;
+        padding: 10px;
+      }
+      @include tablet {
+        width: 180px;
+        height: 100px;
+        padding: 5px;
+      }
+      & h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: $white;
+        margin-bottom: 0;
+        @include desktop {
+          font-size: 1.2rem;
+          width: 210px;
+        }
+        @include tablet {
+          font-size: 12px;
+        }
+      }
+    }
+    &__rating {
+      width: 50px;
+      display: block;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      border-radius: 50%;
+      position: absolute;
+      top: 3%;
+      right: 6%;
+      background: linear-gradient(to bottom, #fcc015, #a07e01);
+      box-shadow: 2px 0px 10px 3px #f28a07a6;
+      @include desktop {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        top: 2%;
+        right: 10%;
+      }
+      @include tablet {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        top: 2%;
+        right: 8%;
+      }
+      @include mobile {
+        width: 35px;
+        height: 35px;
+        top: 3%;
+        right: 20%;
+      }
+    }
+  }
+}

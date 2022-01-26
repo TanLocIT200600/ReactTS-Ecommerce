@@ -35,9 +35,17 @@ const moviedbApi = {
       )
     return res;
   },
-  fetchVideo: async () => {
-    const res = await axiosClient.get(`${apiConfig.baseUrl}movie/585083/videos?api_key=${apiConfig.apiKey}`)
+  fetchVideo: async (id: number) => {
+    const res = await axiosClient.get(`${apiConfig.baseUrl}movie/` + id + `/videos?api_key=${apiConfig.apiKey}`)
       .then((res) => console.log(res)
+      )
+      .catch((error) => console.log(error)
+      )
+    return res;
+  },
+  getDetail: async (id: any, params: any) => {
+    const res = await axiosClient.get(`${apiConfig.baseUrl}movie/` + id + `?api_key=${apiConfig.apiKey}`, params)
+      .then((res) => console.log('details', res)
       )
       .catch((error) => console.log(error)
       )
