@@ -3,9 +3,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import './heroSlide.scss';
 import Slider from "react-slick"
 import apiConfig from '../../api/apiConfig';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SwiperCore, { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import moviedbApi from '../../api/moviedbApi';
+import { Modal } from "antd";
 
 
 interface IMyData {
@@ -35,6 +37,7 @@ const HeroSlide = () => {
   SwiperCore.use([Autoplay]);
 
   const [movie, setMovie] = useState<IMyData[]>();
+  const [video, setVideo] = useState();
 
   useEffect(() => {
     const fetchMovieList: any = async () => {
@@ -47,8 +50,20 @@ const HeroSlide = () => {
       catch (err) {
         console.log(err);
       }
+    };
+    const fetchVideo: any = async () => {
+      const URL: string = "https://api.themoviedb.org/3/movie/585083/videos?api_key=761dea999bb72d9517bae0bb585b4df0"
+      try {
+        const res = await axios.get(URL);
+        console.log('video', res.data.results[0]);
+        setVideo(res.data.results[0]);
+      }
+      catch (err) {
+        console.log(err);
+      }
     }
     fetchMovieList()
+    fetchVideo()
   }, [])
 
   return (
@@ -58,7 +73,6 @@ const HeroSlide = () => {
         grabCursor={true}
         spaceBetween={0}
         slidesPerView={1}
-      // autoplay={{ delay: 3000 }}
       >
         {
           movie?.map((item, i) => (
@@ -80,15 +94,11 @@ const HeroSlide = () => {
 const HeroSlideItem = (props: any) => {
 
   let navigate = useNavigate();
-
   const item = props.item;
-
   const background = apiConfig.originalImage(item.backdrop_path ? item.poster_path : item.backdrop_path);
-
-  const setModalActive = async () => {
-    const modal: Element | null = document.querySelector(`#modal_${item.id}`);
-
-    // const videos = await tmdbApi.getVideos(category.movie, item.id);
+  const showVideo = () => {
+    // const modal: Element | null = document.querySelector(`#modal_${item.id}`);
+    // const videos = await moviedbApi.fetchVideo();
 
     // if (videos.results.length > 0) {
     //   const videSrc = 'https://www.youtube.com/embed/' + videos.results[0].key;
@@ -96,9 +106,20 @@ const HeroSlideItem = (props: any) => {
     // } else {
     //   modal.querySelector('.modal__content').innerHTML = 'No trailer';
     // }
+    // modal?.classList.toggle('active');
+    setIsModalVisible(true);
 
-    modal?.classList.toggle('active');
+
   }
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <div
@@ -113,9 +134,14 @@ const HeroSlideItem = (props: any) => {
             <button className="watch-now" onClick={() => navigate('/movie/' + item.id)}>
               Watch now
             </button>
-            <button className="watch-trailer" onClick={setModalActive}>
+            <button className="watch-trailer" onClick={showVideo}>
               Watch trailer
             </button>
+            <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+            </Modal>
           </div>
         </div>
         <div className="hero-slide__item__content__poster">

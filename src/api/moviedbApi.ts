@@ -34,6 +34,14 @@ const moviedbApi = {
       .catch((error) => console.log(error)
       )
     return res;
+  },
+  fetchVideo: async () => {
+    const res = await axiosClient.get(`${apiConfig.baseUrl}movie/585083/videos?api_key=${apiConfig.apiKey}`)
+      .then((res) => console.log(res)
+      )
+      .catch((error) => console.log(error)
+      )
+    return res;
   }
 }
 export default moviedbApi;
