@@ -10,7 +10,7 @@
       rgba(0, 0, 0, 0.4),
       rgba(0, 0, 0, 0.8)
     ),
-    url("https://s29588.pcdn.co/wp-content/uploads/sites/2/2019/03/Movie_Posters_Orange_Blue_Featured.jpg.optimal.jpg");
+    url($bg-footer);
   &__content {
     max-width: 1000px;
     &__logo {
@@ -18,13 +18,13 @@
       margin-bottom: 3rem;
 
       img {
-        width: 50px;
-        height: 50px;
+        width: 4.5rem;
+        height: 4.5rem;
       }
       a {
         font-size: 2rem;
         font-weight: 600;
-        margin-left: 10px;
+        margin-left: 1rem;
       }
     }
     &__menus {

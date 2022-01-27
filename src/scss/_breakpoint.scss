@@ -16,3 +16,8 @@
     @content;
   }
 }
+@mixin desktop4k {
+  @media only screen and (min-width: $desktop4k-width) {
+    @content;
+  }
+}

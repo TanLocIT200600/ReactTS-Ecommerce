@@ -3,138 +3,150 @@
 .hero-slide {
   margin-bottom: 3rem;
 }
-  .hero-slide__item {
-    padding: 9rem 0;
+.hero-slide__item {
+  padding: 9rem 0;
+  width: 100%;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    position: relative;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+    height: 100%;
+    @include overlay();
+  }
 
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      @include overlay();
-    }
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-image: linear-gradient(to top, $body-bg, rgba($black, 0));
+  }
+  &__content {
+    @include flex(center, flex-end);
+    &__info {
+      width: 55%;
+      padding: 0 3rem;
+      position: relative;
 
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100px;
-      background-image: linear-gradient(to top, $body-bg, rgba($black, 0));
-    }
-    &__content {
-      @include flex(center, flex-end);
-      &__info {
-        width: 55%;
-        padding: 0 3rem;
-        position: relative;
-
-        @include tablet {
-          width: 100%;
-        }
-        & > * ~ * {
-          margin-top: 3rem;
-        }
-        .title {
-          font-size: 5rem;
-          font-weight: 700;
-          line-height: 1;
-          color: $white;
-
-          @include tablet {
-            font-size: 4rem;
-          }
-        }
-        .overview {
-          font-weight: 700;
-        }
-        .btns > * ~ * {
-          margin-left: 1rem;
-        }
-        .watch-now,
-        .watch-trailer,
-        .title,
-        .overview {
-          opacity: 0;
-          transform: translateY(-100px);
-          transition: transform 0.5s ease, opacity 0.5s ease;
-        }
-        .watch-now,
-        .watch-trailer {
-          padding: 15px 30px;
-          font-size: 1.2rem;
-          color: white;
-          font-weight: 600;
-          border-radius: 25px;
-          cursor: pointer;
-          transform: translate3d(0px, 0px, 0px);
-          transition: transform 0.5s ease;
-          &:hover {
-            transform: translate3d(0px, -5px, 10px);
-          }
-        }
-        .watch-now {
-          background: #f80000f0;
-          border: none;
-          box-shadow: 0px 0px 10px 10px #ff00009e;
-        }
-        .watch-trailer {
-          background: #ffffff00;
-          border: 3px solid white;
-          margin-left: 2rem;
-        }
+      @include tablet {
+        width: 100%;
       }
+      & > * ~ * {
+        margin-top: 3rem;
+      }
+      .title {
+        font-size: 5rem;
+        font-weight: 700;
+        line-height: 1;
+        color: $white;
 
-      &__poster {
-        flex: 1;
-        @include flex(center, center);
-        position: relative;
-
-        img {
-          width: 400px;
-          border-radius: $border-radius;
-          box-shadow: $box-shadow;
-
-          transform: scale(0);
-          transition: transform 0.7s ease;
+        @include desktop4k {
+          font-size: 7rem;
         }
 
         @include tablet {
-          display: none;
+          font-size: 4rem;
         }
       }
-    }
-
-    &.active > &__content > &__content__poster {
-      img {
-        transform: scale(1);
+      .overview {
+        font-weight: 700;
+        @include desktop4k {
+          font-size: 2rem;
+        }
       }
-    }
-    &.active > &__content > &__content__info {
+      .btns > * ~ * {
+        margin-left: 1rem;
+      }
       .watch-now,
       .watch-trailer,
       .title,
       .overview {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .title {
-        transition-delay: 0.3s, 0.3s;
-      }
-      .overview {
-        transition-delay: 0.6s, 0.6s;
+        opacity: 0;
+        transform: translateY(-100px);
+        transition: transform 0.5s ease, opacity 0.5s ease;
       }
       .watch-now,
       .watch-trailer {
-        transition-delay: 0.9s, 0.9s;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        color: white;
+        font-weight: 600;
+        border-radius: 25px;
+        cursor: pointer;
+        transform: translate3d(0px, 0px, 0px);
+        transition: transform 0.5s ease;
+        &:hover {
+          transform: translate3d(0px, -5px, 10px);
+        }
+      }
+      .watch-now {
+        background: #f80000f0;
+        border: none;
+        box-shadow: 0px 0px 10px 10px #ff00009e;
+      }
+      .watch-trailer {
+        background: #ffffff00;
+        border: 3px solid $white;
+        margin-left: 2rem;
+      }
+    }
+
+    &__poster {
+      flex: 1;
+      @include flex(center, center);
+      position: relative;
+
+      img {
+        width: 400px;
+        border-radius: $border-radius;
+        box-shadow: $box-shadow;
+
+        transform: scale(0);
+        transition: transform 0.7s ease;
+      }
+
+      @include tablet {
+        display: none;
       }
     }
   }
+
+  &.active > &__content > &__content__poster {
+    img {
+      transform: scale(1);
+    }
+  }
+  &.active > &__content > &__content__info {
+    .watch-now,
+    .watch-trailer,
+    .title,
+    .overview {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .title {
+      transition-delay: 0.3s, 0.3s;
+    }
+    .overview {
+      transition-delay: 0.6s, 0.6s;
+    }
+    .watch-now,
+    .watch-trailer {
+      transition-delay: 0.9s, 0.9s;
+    }
+  }
+}
+.ant-modal-content {
+  .ant-modal-body {
+    padding: 40px 15px 15px !important;
+  }
+}

@@ -3,9 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import './Header.scss';
 const logo = require('../../assets/images/logo.png');
 
-interface Header {
-  current: any
-}
 
 const headerNav = [
   {
@@ -30,11 +27,10 @@ const Header = () => {
 
   useEffect(() => {
     const shrinkHeader = () => {
-      let myElement = document.getElementById("myElementID");
       if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        myElement?.classList.add('shrink')
+        headerRef.current?.classList.add('shrink');
       } else {
-        myElement?.classList.remove('shrink')
+        headerRef.current?.classList.remove('shrink');
       }
     }
     window.addEventListener('scroll', shrinkHeader);
@@ -44,7 +40,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div ref={headerRef} className="header" id='myElementID'>
+    <div ref={headerRef} className="header">
       <div className="header__wrap container">
         <div className="logo">
           <img src={logo} alt="" />

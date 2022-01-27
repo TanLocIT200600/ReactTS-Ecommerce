@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Slider from 'react-slick';
 import "./movie-upcoming.scss";
 import { Link } from 'react-router-dom';
+import movieDbApi from '../../api/movieDbApi';
 
 
 interface IMyData {
@@ -23,27 +23,25 @@ interface IMyData {
     release_date: string,
     title: string,
     video: boolean,
-    vote_average: number,
     vote_count: number,
   ]
+
+  vote_average: number,
 }
 
-const MovieUpcoming = (props: any) => {
+const MovieUpcoming = () => {
 
   const [moviePopular, setMoviePopular] = useState<IMyData[]>();
 
 
   useEffect(() => {
-    const fetchMovieUpComing: any = async () => {
-      const URL: string = "https://api.themoviedb.org/3/movie/upcoming?api_key=761dea999bb72d9517bae0bb585b4df0";
+    const fetchMovieUpComing = async () => {
       try {
-        const response = await axios.get(URL);
-        // console.log('moviePP', response.data.results);
-        setMoviePopular(response.data.results);
+        const response = await movieDbApi.fetchMovieUpcoming();
+        setMoviePopular(response);
       }
       catch (err) {
         console.log(err);
-
       }
     }
     fetchMovieUpComing()
@@ -85,7 +83,7 @@ const MovieUpcoming = (props: any) => {
   return <div className="upcoming-movie">
     <h2 className="upcoming-movie__title">Coming Soon Movie</h2>
     <Slider {...settings}>
-      {moviePopular?.map((item: any) => (
+      {moviePopular?.map((item) => (
         <Link to={`/movie/${item.id}`} key={item.id} className="slider-item">
           <div className="slider-item__images">
             <img src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`} alt="" />

@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import apiConfig from '../../api/apiConfig';
 import VideoList from './VideoList';
 import './detail.scss';
-import axios from 'axios';
 import CastList from './CastList';
+import movieDbApi from '../../api/movieDbApi';
 
 
 interface IDataDetail {
@@ -18,22 +18,19 @@ interface IDataDetail {
     }
   ];
   overview: string;
-  id: number;
+  id: string | undefined;
 }
 
 const Details = () => {
-
   const { id } = useParams();
 
   const [item, setItem] = useState<IDataDetail>();
 
   useEffect(() => {
     const getDetail = async () => {
-      const res: any = `${apiConfig.baseUrl}movie/${id}?api_key=${apiConfig.apiKey}`;
       try {
-        const response = await axios.get(res);
-        setItem(response.data);
-        console.log("details1", response.data);
+        const response = await movieDbApi.fetchDetail(id);
+        setItem(response);
       }
       catch (err) {
         console.log(err);

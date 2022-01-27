@@ -1,8 +1,6 @@
-import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
-
 import { useParams } from 'react-router';
-import apiConfig from '../../api/apiConfig';
+import movieDbApi from '../../api/movieDbApi';
 
 
 
@@ -14,12 +12,9 @@ const VideoList = (props: any) => {
 
   useEffect(() => {
     const getVideos = async () => {
-      const URL: string = `${apiConfig.baseUrl}movie/${id}/videos?api_key=${apiConfig.apiKey}`;
       try {
-        const response = await axios.get(URL);
-        setVideos(response.data.results.slice(0, 5));
-        console.log('video', response.data);
-
+        const response = await movieDbApi.fetchVideo(id);
+        setVideos(response.slice(0, 5));
       }
       catch (err) {
         console.log(err);
@@ -31,8 +26,8 @@ const VideoList = (props: any) => {
   return (
     <>
       {
-        videos.map((item, i) => (
-          <Video key={i} item={item} />
+        videos.map((item, index) => (
+          <Video key={index} item={item} />
         ))
       }
     </>

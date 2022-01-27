@@ -19,6 +19,10 @@
     font-weight: 600;
     text-align: center;
     text-shadow: 3px 3px 20px #e0630b, -2px 1px 30px #dad41a;
+    @include desktop4k {
+      margin: 7rem;
+      font-size: 5rem;
+    }
     @include desktop {
       font-size: 4rem;
     }
@@ -30,6 +34,9 @@
     }
   }
   .slick-list {
+    @include desktop4k {
+      height: 600px;
+    }
     @include mobile {
       padding: 0 10%;
     }
@@ -45,6 +52,10 @@
       & img {
         width: 270px;
         height: 300px;
+        @include desktop4k {
+          width: 380px;
+          height: 450px;
+        }
         @include mobile {
           width: 250px;
           height: 300px;
@@ -52,6 +63,10 @@
       }
     }
     &__content {
+      @include desktop4k {
+        width: 380px;
+        height: 200px;
+      }
       @include desktop {
         width: 270px;
         height: 100px;
@@ -67,6 +82,10 @@
         font-weight: 600;
         color: $white;
         margin-bottom: 0;
+        @include desktop4k {
+          font-size: 2.2rem;
+          width: 380px;
+        }
         @include desktop {
           font-size: 1.2rem;
           width: 210px;

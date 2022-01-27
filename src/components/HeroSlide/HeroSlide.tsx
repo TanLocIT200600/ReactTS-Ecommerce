@@ -1,12 +1,11 @@
-import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import './heroSlide.scss';
 import apiConfig from '../../api/apiConfig';
 import SwiperCore, { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Carousel, Modal } from 'antd';
+import { Modal } from 'antd';
 import { useParams } from 'react-router-dom';
-
+import movieDbApi from '../../api/movieDbApi';
 
 
 interface IMyData {
@@ -32,41 +31,21 @@ interface IMyData {
   ]
 }
 
-const HeroSlide = (props: any) => {
+const HeroSlide = () => {
   SwiperCore.use([Autoplay]);
-
   const [movie, setMovie] = useState<IMyData[]>();
-  const [video, setVideo] = useState();
-  const item = props.item;
-
   useEffect(() => {
-    const fetchMovieList: any = async () => {
-      const URL: string = `${apiConfig.baseUrl}movie/popular?api_key=${apiConfig.apiKey}`
+    const fetchMovieList = async () => {
       try {
-        const res = await axios.get(URL);
-        // console.log(res.data.results.slice(1, 2));
-        setMovie(res.data.results.slice(1, 2));
-      }
-      catch (err) {
-        console.log(err);
-      }
-    };
-    const fetchVideo: any = async () => {
-      const URL: string = `${apiConfig.baseUrl}movie/${item.id}/videos?api_key=${apiConfig.apiKey}`
-      try {
-        const res = await axios.get(URL);
-        // console.log('video', res.data.results[0]);
-        setVideo(res.data.results.slice(1, 2));
+        const response = await movieDbApi.fetchMovieList();
+        setMovie(response.slice(1, 2));
       }
       catch (err) {
         console.log(err);
       }
     }
     fetchMovieList()
-    fetchVideo()
-  }, [props.id])
-
-
+  }, [])
 
   return (
     <div className="hero-slide">
@@ -107,22 +86,21 @@ const HeroSlideItem = (props: any) => {
     setIsModalVisible(false);
   };
 
+  const { id } = useParams();
+
   const [videos, setVideos] = useState();
   useEffect(() => {
-    const getVideosItem = async () => {
-      const URL: string = `${apiConfig.baseUrl}movie/${item.id}/videos?api_key=${apiConfig.apiKey}`;
+    const fetchVideo = async (id: number) => {
       try {
-        const response = await axios.get(URL);
-        setVideos(response.data.results.slice(1, 2));
-        console.log('video', response.data.results.slice(1, 2));
-
+        const res = await movieDbApi.fetchVideo(item.id);
+        setVideos(res.slice(1, 2));
       }
       catch (err) {
         console.log(err);
       }
     }
-    getVideosItem();
-  }, [props.id]);
+    fetchVideo(item.id);
+  }, [id]);
   const iframeRef: React.MutableRefObject<null> = useRef(null);
 
   return (
@@ -140,7 +118,7 @@ const HeroSlideItem = (props: any) => {
               Watch trailer
             </button>
             <Modal title={item.name} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-              <iframe style={{ marginTop: '25px' }}
+              <iframe
                 src={`https://www.youtube.com/embed/${item.key}`}
                 ref={iframeRef}
                 width="100%"
