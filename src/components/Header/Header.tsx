@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.scss';
+const logo = require('../../assets/images/logo.png');
 
 interface Header {
   current: any
@@ -23,7 +24,6 @@ const headerNav = [
 
 const Header = () => {
   const { pathname } = useLocation();
-  // const headerRef = useRef(null);
   const headerRef = React.useRef<HTMLDivElement>(null);
 
   const active = headerNav.findIndex(e => e.display === pathname);
@@ -32,10 +32,8 @@ const Header = () => {
     const shrinkHeader = () => {
       let myElement = document.getElementById("myElementID");
       if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        // headerRef.current.classList.add('shrink');
         myElement?.classList.add('shrink')
       } else {
-        // headerRef.current.classList.remove('shrink');
         myElement?.classList.remove('shrink')
       }
     }
@@ -49,12 +47,13 @@ const Header = () => {
     <div ref={headerRef} className="header" id='myElementID'>
       <div className="header__wrap container">
         <div className="logo">
-          <img src="https://play-lh.googleusercontent.com/BGCtAtNN1Ck_ke7wU-7EDps4y1EFoufBGSvbdyVYERpGPh2OA2_dF-Ovcx8lFF-pKVI" alt="" />
+          <img src={logo} alt="" />
+          <Link to="/">Tix Movie</Link>
         </div>
         <ul className="header__nav">
           {
             headerNav.map((index, item) => (
-              <li key={item} className={`${item === active ? 'active' : ""}`}>
+              <li key={item} className={`${item === active ? 'active' : ''}`}>
                 <Link to={index.path}>
                   {index.display}
                 </Link>

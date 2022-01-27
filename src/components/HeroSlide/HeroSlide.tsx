@@ -4,6 +4,9 @@ import './heroSlide.scss';
 import apiConfig from '../../api/apiConfig';
 import SwiperCore, { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Carousel, Modal } from 'antd';
+import { useParams } from 'react-router-dom';
+
 
 
 interface IMyData {
@@ -29,15 +32,16 @@ interface IMyData {
   ]
 }
 
-const HeroSlide = () => {
+const HeroSlide = (props: any) => {
   SwiperCore.use([Autoplay]);
 
   const [movie, setMovie] = useState<IMyData[]>();
   const [video, setVideo] = useState();
+  const item = props.item;
 
   useEffect(() => {
     const fetchMovieList: any = async () => {
-      const URL: string = "https://api.themoviedb.org/3/movie/popular?api_key=761dea999bb72d9517bae0bb585b4df0"
+      const URL: string = `${apiConfig.baseUrl}movie/popular?api_key=${apiConfig.apiKey}`
       try {
         const res = await axios.get(URL);
         // console.log(res.data.results.slice(1, 2));
@@ -48,11 +52,11 @@ const HeroSlide = () => {
       }
     };
     const fetchVideo: any = async () => {
-      const URL: string = "https://api.themoviedb.org/3/movie/585083/videos?api_key=761dea999bb72d9517bae0bb585b4df0"
+      const URL: string = `${apiConfig.baseUrl}movie/${item.id}/videos?api_key=${apiConfig.apiKey}`
       try {
         const res = await axios.get(URL);
         // console.log('video', res.data.results[0]);
-        setVideo(res.data.results[0]);
+        setVideo(res.data.results.slice(1, 2));
       }
       catch (err) {
         console.log(err);
@@ -60,7 +64,9 @@ const HeroSlide = () => {
     }
     fetchMovieList()
     fetchVideo()
-  }, [])
+  }, [props.id])
+
+
 
   return (
     <div className="hero-slide">
@@ -78,8 +84,7 @@ const HeroSlide = () => {
               )}
             </SwiperSlide>
           ))
-        }
-      </Swiper>
+        }</Swiper>
     </div>
   );
 };
@@ -88,6 +93,37 @@ const HeroSlideItem = (props: any) => {
 
   const item = props.item;
   const background = apiConfig.originalImage(item.backdrop_path ? item.poster_path : item.backdrop_path);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const [videos, setVideos] = useState();
+  useEffect(() => {
+    const getVideosItem = async () => {
+      const URL: string = `${apiConfig.baseUrl}movie/${item.id}/videos?api_key=${apiConfig.apiKey}`;
+      try {
+        const response = await axios.get(URL);
+        setVideos(response.data.results.slice(1, 2));
+        console.log('video', response.data.results.slice(1, 2));
+
+      }
+      catch (err) {
+        console.log(err);
+      }
+    }
+    getVideosItem();
+  }, [props.id]);
+  const iframeRef: React.MutableRefObject<null> = useRef(null);
 
   return (
     <div
@@ -100,9 +136,18 @@ const HeroSlideItem = (props: any) => {
           <div className="overview">{item.overview}</div>
           <div className="btns">
             <button className="watch-now">Watch now</button>
-            <button className="watch-trailer">
+            <button className="watch-trailer" onClick={showModal}>
               Watch trailer
             </button>
+            <Modal title={item.name} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+              <iframe style={{ marginTop: '25px' }}
+                src={`https://www.youtube.com/embed/${item.key}`}
+                ref={iframeRef}
+                width="100%"
+                height="350"
+                title="video"
+              ></iframe>
+            </Modal>
           </div>
         </div>
         <div className="hero-slide__item__content__poster">

@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import "./Footer.scss"
+import "./Footer.scss";
+const logo = require('../../assets/images/logo.png');
 
 const Footer = () => {
   return (
     <div className="footer">
       <div className="footer__content container">
         <div className="footer__content__logo">
-          <img src="https://play-lh.googleusercontent.com/BGCtAtNN1Ck_ke7wU-7EDps4y1EFoufBGSvbdyVYERpGPh2OA2_dF-Ovcx8lFF-pKVI" alt="" />
+          <img src={logo} alt="" />
+          <Link to="/">Tix Movie</Link>
         </div>
 
         <div className="footer__content__menus">
