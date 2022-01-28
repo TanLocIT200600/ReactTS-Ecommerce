@@ -11,7 +11,7 @@ const VideoList = (props: any) => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    const getVideos = async () => {
+    const getVideos = async (id: number) => {
       try {
         const response = await movieDbApi.fetchVideo(id);
         setVideos(response.slice(0, 5));
@@ -20,7 +20,7 @@ const VideoList = (props: any) => {
         console.log(err);
       }
     }
-    getVideos();
+    getVideos(props.id);
   }, [props.id]);
 
   return (

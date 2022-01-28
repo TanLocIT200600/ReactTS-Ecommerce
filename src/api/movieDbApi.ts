@@ -11,7 +11,7 @@ const movieDbApi = {
       )
     return response;
   },
-  fetchVideo: (id: string | undefined) => {
+  fetchVideo: (id: number) => {
     const response = axios.get(`${apiConfig.baseUrl}movie/${id}/videos?api_key=${apiConfig.apiKey}`)
       .then((res) => {
         return res.data.results;

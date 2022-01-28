@@ -92,7 +92,7 @@ const HeroSlideItem = (props: any) => {
   useEffect(() => {
     const fetchVideo = async (id: number) => {
       try {
-        const res = await movieDbApi.fetchVideo(item.id);
+        const res = await movieDbApi.fetchVideo(id);
         setVideos(res.slice(1, 2));
       }
       catch (err) {
