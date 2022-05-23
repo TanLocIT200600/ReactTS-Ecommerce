@@ -4,8 +4,8 @@ import './App.scss';
 
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 import Routes from './config/Routes';
 
@@ -14,11 +14,11 @@ function App() {
         <BrowserRouter>
             <Route render={props => (
                 <>
-                    <Header {...props}/>
-                    <Routes/>
-                    <Footer/>
+                    <Header {...props} />
+                    <Routes />
+                    <Footer />
                 </>
-            )}/>
+            )} />
         </BrowserRouter>
     );
 }
